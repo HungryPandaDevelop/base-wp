@@ -1,0 +1,85 @@
+
+$gridCount: 12
+$indent: 15px
+$maxWidth: 1620px
+$gap: 15px
+
+.main-grid
+	display: grid
+	grid-template-columns: repeat($gridCount, 1fr)
+	gap: $gap
+	padding: 0 $indent
+	max-width: $maxWidth
+	margin: 0 auto
+	position: relative
+	.main-grid
+		padding: 0
+.main-full
+	padding: 0 $indent
+	max-width: $maxWidth
+	margin: 0 auto
+
+section
+	padding: 75px 0 0px
+	position: relative
+	overflow: hidden
+
+.stub-section
+	height: 90px
+
+.head-section
+	margin-bottom: 30px
+
+	h3
+		// font-size: $mediumSize
+		color: $grayDarkColor
+		font-weight: 500
+		a
+			color: $goldColor
+			text-decoration: none
+			&:hover
+				text-decoration: underline
+
+.btn-container-section
+	padding: 40px 0 0px
+	text-align: center
+	.btn
+		width: 260px
+
+.breadcrumbs
+	font-size: $smallSize
+	padding: 8px 8px
+	color: $grayColor
+	position: relative
+	z-index: 2
+	background-color: $whiteColor
+
+	border-bottom: 1px solid $whiteColorSecond
+	em
+		font-size: 0
+		@include icoEl(20px, 20px, "../images/arrows/carret-right-gray.svg", middle, 130%)
+		vertical-align: middle
+	a
+		text-decoration: none
+		color: $blackColor
+		vertical-align: middle
+		&:hover
+			text-decoration: underline
+	span
+		vertical-align: middle
+		margin: 0 5px
+		&:first-child
+			margin-left: 0
+
+.content
+	position: relative
+	min-height: calc(100vh - 300px)
+	h1
+		padding: 10px 0 30px
+		color: $blueColor
+	img
+		max-width: 100%
+.highlight-text
+	background-color: $goldColor
+.section-stub
+	height: 75px

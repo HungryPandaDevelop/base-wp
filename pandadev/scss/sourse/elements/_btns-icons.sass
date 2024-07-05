@@ -1,0 +1,169 @@
+$icoSize: 24px
+$icoOffset: 8px
+
+.close-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/close-black.svg")
+	cursor: pointer
+	&:hover
+		background-image: url("../images/icons/close-gray.svg")
+
+.logout-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/log-out-black.svg")
+	cursor: pointer
+	&:hover
+		background-image: url("../images/icons/log-out-gray.svg")
+.login-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/log-in-black.svg")
+	cursor: pointer
+	&:hover
+		background-image: url("../images/icons/log-in-gray.svg")
+
+.likes-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/like-fill-black.svg")
+	cursor: pointer
+	position: relative
+	&:hover
+		background-image: url("../images/icons/like-fill-gray.svg")
+	span
+		@include positionElement(18px,18px,-6px,-6px,right,bottom)
+		background-color: $goldColor
+		color: $whiteColor
+		font-size: $microSize
+		text-align: center
+		border-radius: 100%
+
+.hamburger-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/hamburger-black.svg", middle, contain, center right)
+	cursor: pointer
+	&:hover
+		background-image: url("../images/icons/hamburger-gray.svg")
+
+@mixin icoBtn($ico, $icoHover)
+	border-color: $blackColor
+	cursor: pointer
+	padding: 6px 13px
+	i,span
+		display: inline-block
+		vertical-align: middle
+	i
+		margin-left: $icoOffset
+		margin-right: $icoOffset
+		@include icoEl($icoSize, $icoSize, $ico)
+	@if $icoHover
+		&:hover
+			color: $grayColor
+			i
+				background-image: url($icoHover)
+
+.phone-btn
+	@include icoBtn("../images/icons/phone-black.svg", "../images/icons/phone-gray.svg")
+.mail-btn
+	@include icoBtn("../images/icons/mail-black.svg", "../images/icons/mail-gray.svg")
+.marker-btn
+	@include icoBtn("../images/icons/marker-black.svg", "../images/icons/marker-gray.svg")
+.whatsapp-btn
+	@include icoBtn("../images/social/whatsapp-black.svg", false)
+	border-color: $blackColor
+
+.edit-btn
+	@include icoBtn("../images/icons/edit-black.svg", "../images/icons/edit-gray.svg")
+	border-color: $blackColor
+
+.delete-btn
+	@include icoBtn("../images/icons/trash-black.svg", "../images/icons/trash-gray.svg")
+	border-color: $blackColor
+
+.delete-btn--circle
+	display: inline-block
+	border: 1px solid $grayColorSecond
+	padding: 5px
+	border-radius: 100%
+	i
+		margin: 0
+.add-btn
+	@include icoBtn("../images/icons/plus-black.svg", "../images/icons/plus-gray.svg")
+	border-color: $blackColor
+
+.sidebar-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/sidebar-black.svg")
+	cursor: pointer
+	&:hover
+		background-image: url("../images/icons/sidebar-gray.svg")
+
+.prev-btn
+	@include icoBtn("../images/arrows/arrow-left-black.svg", "../images/arrows/arrow-left-gray.svg")
+
+.next-btn
+	@include icoBtn("../images/arrows/arrow-right-black.svg", "../images/arrows/arrow-right-gray.svg")
+
+.tile-catalog-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/tile-black.svg")
+	cursor: pointer
+	&:hover,
+	&.active
+		background-image: url("../images/icons/tile-gray.svg")
+
+.line-catalog-btn
+	@include icoEl($icoSize, $icoSize, "../images/icons/line-black.svg")
+	cursor: pointer
+	&:hover,
+	&.active
+		background-image: url("../images/icons/line-gray.svg")
+
+.video-btn
+	cursor: pointer
+	span
+		border-radius: 100%
+		@include positionElement(76px, 76px, 50%, 50%)
+		transform: translateX(-50%) translateY(-50%)
+		border: 2px solid $whiteColor
+		transition: ease-out 0.5s
+	i
+		border-radius: 100%
+		@include positionElement(54px, 54px, 50%, 50%)
+		transform: translateX(-50%) translateY(-50%)
+		@include bgImageEl("../images/icons/play-white.svg", 50px, center)
+		transition: ease-out 0.5s
+	&:hover
+		span
+			width: 80px
+			height: 80px
+		i
+			width: 50px
+			height: 50px
+
+.btn-reg
+	max-width: 400px
+	width: 100%
+	border-color: $blackColor
+	padding: 9px 15px
+	i,span
+		display: inline-block
+		vertical-align: middle
+	&:hover
+		color: $whiteColor
+
+.google-reg-btn
+	@include icoBtn("../images/icons-app/google-color.svg", "../images/icons-app/google-color.svg")
+.vk-reg-btn
+	@include icoBtn("../images/icons-app/vk-color.svg", "../images/icons-app/vk-color.svg")
+.mail-reg-btn
+	@include icoBtn("../images/icons-app/mail-color.svg", "../images/icons-app/mail-color.svg")
+.phone-reg-btn
+	@include icoBtn("../images/icons-app/phone-color.svg", "../images/icons-app/phone-color.svg")
+
+.mouse-down-btn
+	width: 14px
+	height: 22px
+	border-radius: 30px
+	border: 2px solid $goldColor
+	display: flex
+	cursor: pointer
+	margin: 0 auto
+	.dot
+		margin: 2px auto 0
+		width: 4px
+		height: 4px
+		border-radius: 100%
+		background: $goldColor
+		animation: dotMove 2s ease-in-out forwards infinite

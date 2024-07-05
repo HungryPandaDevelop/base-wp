@@ -1,0 +1,75 @@
+.menu-hamburger
+	.popup-container
+		background-color: $whiteColor
+		width: 50%
+		height: 100%
+		max-width: 460px
+		margin: 0
+		margin-left: auto
+		color: $blackColor
+		display: flex
+		flex-direction: column
+		border-radius: 0px
+		padding: 45px 30px 60px
+		overflow-y: auto
+	.social
+		// margin-bottom: 30px
+	ul, li
+		padding: 0
+		margin: 0
+		list-style: none
+	.social a
+		margin: 0 15px
+.menu-mobile
+	display: flex
+	flex-direction: column
+	justify-content: space-between
+	height: 100%
+.popup-nav
+	margin-bottom: 45px
+	li
+		margin-bottom: 15px
+		position: relative
+		border-top: 1px solid $grayColorSecond
+		i
+			@include bgImageEl("../images/arrows/carret-down-gray.svg", 24px)
+			@include positionElement(24px, 24px, 5px, 0, right, top, 2)
+
+		ul
+			background-color: $grayColorSecond
+			font-size: $smallSize
+			display: none
+			padding: 8px 0
+			li
+				padding: 4px 15px
+				margin: 0
+
+		li
+			margin-bottom: 4px
+			border-top: 0
+			border-bottom: 1px solid $grayColorSecond
+			padding: 0 15px
+			&:last-child
+				margin: 0
+				border: 0
+		&:hover
+			ul
+				display: block
+			i
+				transform: rotate(90deg)
+	a
+		color: $blueColor
+		text-decoration: none
+		&:hover
+			color: $goldColor
+.menu-footer-item
+	text-align: center
+.menu-footer-item--feedback
+	margin: 15px 0
+
+@media (max-width: 576px)
+	.menu-hamburger
+		.popup-container
+			width: 100%
+			margin: 0
+			max-width: 100%

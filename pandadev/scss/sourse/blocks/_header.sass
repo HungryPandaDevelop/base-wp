@@ -1,0 +1,85 @@
+
+.stub
+  height: 70px
+
+header
+  @include positionElement(100%, auto, 0, auto, left, top, 3, fixed )
+  color: $blueColor
+  background-color: $whiteColor
+  border-bottom: 1px solid $whiteColorSecond
+  min-width: 320px
+  a
+    text-decoration: none
+    &:hover
+      color: $goldColor
+  .btn
+    padding: 9px 5px
+
+.logo
+  img
+    transition: ease-out 0.25s
+    width: 60px
+    object-fit: cover
+
+.nav-header
+  width: 100%
+  ul
+    display: flex
+    justify-content: space-between
+    width: 100%
+    font-weight: 600
+    font-size: $smallSize
+    list-style: none
+    padding: 0
+  li
+    position: relative
+    ul
+      display: block
+      position: absolute
+      left: 50%
+      transform: translateX(-50%) translateY(10px)
+      background-color: $whiteColor
+      padding: 0
+      width: 260px
+      border: 1px solid $grayColorSecond
+      font-weight: 400
+      transition: ease-out 0.25s
+      opacity: 0
+      visibility: hidden
+      li
+        border-bottom: 1px solid $grayColorSecond
+        display: block
+        &:last-child
+          border: 0
+      a
+        padding: 16px 20px
+        text-transform: initial
+    &:hover
+      ul
+        opacity: 1
+        visibility: visible
+        transform: translateX(-50%) translateY(0)
+  a
+    position: relative
+    padding: 23px 0
+    padding-right: 20px
+    i
+      @include positionElement(20px,20px, -3px, 50%,right)
+      transform: translateY(-50%)
+      @include bgImageEl("../images/arrows/carret-down-black.svg",24px)
+      font-size: 0
+    &:hover
+      i
+        background-image: url("../images/arrows/carret-down-gray.svg")
+
+.feedback-header
+  margin-left: auto
+  gap: 30px
+.user-header
+  position: relative
+@media (max-width: 992px)
+  .feedback-header
+    gap: 8px
+@media (max-width: 576px)
+  .stub
+    height: 58px

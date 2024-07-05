@@ -1,0 +1,38 @@
+
+.popup
+  @include positionElement(100%, 100%, 0, 0, left, top, 4, fixed, flex)
+  visibility: hidden
+  opacity: 0
+  transition: ease-out 0.5s
+  &.show
+    opacity: 1
+    visibility: visible
+
+  h3,h4
+    color: inherit
+    text-align: center
+  .btn
+    width: 100%
+
+.popup-overlay
+  @include positionElement(100%, 100%, 0, 0)
+  background-color: $blueColor
+  opacity: 0.3
+
+.close-btn--popup
+  position: absolute
+  right: 0
+  top: 0
+  margin: 15px
+
+.popup-container
+  position: relative
+  background-color: $whiteColor
+  max-width: 600px
+  width: 100%
+  height: auto
+  margin: auto
+  padding: 40px 30px
+  transition: ease-out 0.5s
+  overflow-y: auto
+  max-height: 100%

@@ -1,0 +1,59 @@
+.tag
+  background-color: $grayColor
+  color: $whiteColor
+  font-weight: 600
+  border-radius: 30px
+  display: inline-block
+  padding: 0 14px
+  margin: 0 8px 15px 0
+  text-decoration: none
+  &:hover
+    background-color: $blackColor
+    color: $greenColor
+.link
+  font-weight: 700
+  font-size: $standartSize
+  color: $blueColor
+  text-decoration: none
+  &:hover
+    color: $grayColor
+
+.phone-ico
+  @include icoEl(18px, 22px, '../images/icons/phone-black.svg')
+
+.mail-ico
+  @include icoEl(18px, 20px, '../images/icons/mail-black.svg')
+
+.marker-ico
+  @include icoEl(20px, 16px, '../images/icons/marker-black.svg')
+
+.date-ico
+  @include icoEl(20px, 16px, '../images/icons/calendar-black.svg', text-top)
+
+.time-ico
+  @include icoEl(20px, 16px, '../images/icons/time-black.svg', text-top)
+
+.view-ico
+  @include icoEl(20px, 16px, '../images/icons/view-black.svg', text-top)
+
+.rewiews-ico
+  @include icoEl(20px, 16px, '../images/icons/rew-black.svg', text-top)
+
+.user-ico
+  @include icoEl(20px, 16px, '../images/icons/avatar-black.svg', text-top)
+
+@keyframes dotMove
+  0%
+    opacity: 0
+
+  30%
+    transform: translateY(0px)
+    opacity: 1
+
+  50%
+    transform: translateY(10px)
+    opacity: 0
+
+  100%
+    opacity: 0
+    transform: translateY(0px)

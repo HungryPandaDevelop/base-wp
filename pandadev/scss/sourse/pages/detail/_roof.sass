@@ -1,0 +1,40 @@
+.detail-roof
+  background-color: $whiteColorSecond
+  padding: 15px 0
+  margin: 0 0 45px
+  .main-full
+    display: flex
+  .next-btn
+    margin-left: auto
+.detail-roof-info
+  margin-left: 45px
+
+  display: flex
+  align-items: center
+.detail-roof-info-item
+  display: inline-block
+  margin-right: 15px
+  i,span
+    vertical-align: middle
+.post-views
+  display: inline-block
+@media (max-width: 576px)
+  .detail-roof-info
+    display: block
+    width: 50%
+  .detail-roof-info-item
+    width: 48%
+    margin: 0
+    &:first-child
+      width: 100%
+  .detail-roof
+    padding: 5px 0
+    font-size: $smallSize
+    .prev-btn,
+    .next-btn
+      padding: 0
+      font-size: 0
+      width: 25%
+      display: flex
+      i
+        margin: auto

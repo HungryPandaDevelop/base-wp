@@ -1,0 +1,81 @@
+.search-container
+  position: relative
+  z-index: 2
+  .spinner
+    left: auto
+    right: 8px
+.search
+  // width: 300px
+  position: relative
+  .search-loop,
+  i
+    margin: 12px 13px
+    position: absolute
+    right: 0
+    top: 0
+  i
+    display: none
+  &.search-on
+    .search-loop
+      display: none
+    i
+      display: block
+  .spinner
+    display: none
+    &.active
+      display: block
+.search-loop
+  @include icoEl(20px, 20px, '../images/icons/loop-black.svg')
+  &:hover
+    background-image: url('../images/icons/loop-gray.svg')
+
+.search-input
+  font-size: $smallSize
+  background-color: $whiteColorSecond
+  border-radius: 30px
+  text-transform: initial
+  font-weight: 600
+  border: 0
+  padding: 15px
+  width: 100%
+  color: $blueColor
+
+  &:focus
+    outline: 0
+  &::placeholder
+    font-weight: 500
+
+.search-list
+  @include positionElement(100%, auto,0,calc(100% + 12px),left,top,3)
+  background-color: $whiteColor
+  padding: 30px 20px 15px
+  border: 1px solid $grayColor
+  transition: ease-out 0.5s
+  opacity: 0
+  visibility: hidden
+  a
+    text-decoration: none
+    &:hover
+      color: $goldColor
+  &.active
+    opacity: 1
+    visibility: visible
+  h3
+    font-weight: 600
+    font-size: $smallSize
+    color: $grayColor
+    text-transform: uppercase
+    margin: 0 0 8px 0px
+  li
+    margin-bottom: 10px
+    &:last-child
+      margin-bottom: 0
+
+.search-list-line
+  padding-bottom: 8px
+  margin-bottom: 8px
+  border-bottom: 1px solid $whiteColorSecond
+  &:last-child
+    border-bottom: 0
+    margin-bottom: 0
+    padding-bottom: 0

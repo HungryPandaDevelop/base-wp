@@ -1,0 +1,57 @@
+
+input
+	-webkit-appearance: none
+	-webkit-border-radius: 0
+
+.input-decorate,
+.custom-select,
+.file-decorate
+	padding: 15px
+	border: 0
+	font-family: inherit
+	font-size: $standartSize
+	font-weight: 500
+	resize: none
+	width: 100%
+	background: none
+	color: $blackColor
+	border: 1px solid $blackColor
+	transition: ease-out 0.5s
+	background-color: $whiteColor
+	&:focus
+		outline: 0
+		border-color: $goldColor
+	&::placeholder
+		color: $blackColor
+
+.input-search
+	font-size: $smallSize
+	background-color: $whiteColorSecond
+	border-radius: 30px
+	text-transform: initial
+	font-weight: 600
+	border: 0
+	padding: 14px 12px
+	width: 100%
+	color: $blueColor
+	&:focus
+		outline: 0
+	&::placeholder
+		font-weight: 500
+
+.file-decorate-error span,
+.input-error
+	border-color: $redColor
+.mail-error
+	border-color: $orangeColor
+.error-hint
+	color: $redColor
+	margin-top: 2px
+
+.input-box
+	margin: 0 0 15px
+
+.agreement-box
+	text-align: right
+	.wpcf7-acceptance
+		display: inline-block
