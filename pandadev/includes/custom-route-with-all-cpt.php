@@ -1,5 +1,7 @@
 <?php
 
+
+
 add_action('rest_api_init', 'reg_path');
 
 function reg_path(){
@@ -11,33 +13,42 @@ function reg_path(){
 
 }
 
-
-
 function searchAll($data){
 
   $customPosts = new WP_Query(array(
-    'post_type' => 'news',
+    'post_type' => array('news','blog','product','services'),
     'posts_per_page' => -1,
     // 'search_prod_title' => $data['search'],
     's' =>  $data['search']
   ));
 
+  $typesResults = array(
+    'news'  =>  array(),
+    'blog'  =>  array(),
+    'product'  =>  array(),
+    'services'  =>  array(),
+  );
 
 
-  $results = array();
+  // $customPostsResults = array();
 
   while($customPosts->have_posts()){
     $customPosts->the_post();
 
-  
-        array_push($results, array(
+    foreach ($typesResults as $key => $value) {
+      // echo $key;
+      if(get_post_type() == $key){
+        array_push($typesResults[$key], array(
           'id' => get_the_ID(),
           'title' => get_the_title(),
           'link'  => get_permalink(get_the_ID())
         ));
-    
+      }
+    }
 
   }
 
-  return $results;
+  return $typesResults;
 }
+
+

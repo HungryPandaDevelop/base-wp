@@ -8,7 +8,6 @@ mainSlider.lightSlider({
   slideMove: 1,
   easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
   speed: 600,
-  slideMargin: 0,
   addClass: 'main-slider-container',
   // adaptiveHeight: true,
   responsive: [
@@ -111,21 +110,91 @@ thumbSlider.lightSlider({
 });
 
 
+
 let thumbSliderVericale = $('.thumb-slider-verticale');
 
-thumbSliderVericale.lightSlider({
+let WindowWidth = $(window).width();
 
-  gallery: true,
-  item: 1,
-  vertical: true,
-  verticalHeight: 300,
-  enableDrag: true,
-  controls: false,
-  // vThumbWidth:50,
-  thumbItem: 4,
+let thumbHeight = 720;
+let thumbItem = 6;
+
+if (WindowWidth < 1024) {
+  thumbHeight = 400;
+  thumbItem = 5;
+}
+
+if (WindowWidth < 820) {
+  thumbHeight = 320;
+  thumbItem = 4;
+}
 
 
-});
+if (WindowWidth > 576) {
+
+  thumbSliderVericale.lightSlider({
+
+    gallery: true,
+    item: 1,
+    vertical: true,
+    verticalHeight: thumbHeight,
+    // adaptiveHeight: false,
+    enableDrag: true,
+    controls: true,
+    addClass: 'animals-slider-container',
+    // vThumbWidth:50, 
+    thumbItem: thumbItem,
+
+  });
+} else {
+  thumbSliderVericale.lightSlider({
+
+    gallery: true,
+    item: 1,
+    thumbItem: 4,
+    slideMargin: 0,
+    enableDrag: false,
+    currentPagerPosition: 'left',
+    addClass: 'thumb-slider-container',
+
+  });
+}
+
+let petsSliderVericale = $('.pets-slider-verticale');
+
+
+
+if (WindowWidth > 576) {
+
+  petsSliderVericale.lightSlider({
+
+    gallery: true,
+    item: 1,
+    vertical: true,
+    verticalHeight: 240,
+    enableDrag: true,
+    controls: true,
+    // addClass: 'pets-slider-container',
+    // vThumbWidth:50, 
+    thumbItem: 4,
+
+  });
+} else {
+  petsSliderVericale.lightSlider({
+
+    gallery: true,
+    item: 1,
+    thumbItem: 4,
+    slideMargin: 0,
+    enableDrag: false,
+    currentPagerPosition: 'left',
+    addClass: 'pets-slider-container',
+
+  });
+}
+
+
+
+
 
 let longSlider = $('.long-slider');
 
@@ -230,97 +299,156 @@ $('.phone-mask').on('keydown', function (e) {
 
 
 
-		// check email
-		var r = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-		var mailInput;
-		var mailFlag = 1;
-		var isEmpty = false;
+// check email
+var r = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+var mailInput;
+var mailFlag = 1;
+var isEmpty = false;
 
-		function checkMail(elThis) {
-				mailInput = elThis.val();
+function checkMail(elThis) {
+	mailInput = elThis.val();
 
-				if (!r.test(mailInput)) {
-						isEmpty = false;
-						elThis.addClass('mail-error');
+	if (!r.test(mailInput)) {
+		elThis.addClass('mail-error');
 
-				} else {
-						isEmpty = true;
-						elThis.removeClass('mail-error')
-				}
+	} else {
+		elThis.removeClass('mail-error')
+	}
+}
+
+$('.check-mail').on('keyup', function () {
+	checkMail($(this));
+});
+// check email
+
+// check require
+let timeErrId;
+$('.btn-send').on('click', function (e) {
+	clearTimeout(timeErrId);
+
+	isEmpty = false;
+
+	// checkMail($(this).parents('.form').find('.check-mail'));
+
+	$(this).parents('.form').find('.require').each(function () {
+
+		// if ($(this).attr('type') == 'checkbox') {
+		// 	if (!$(this).is(':checked')) {
+		// 		$(this).parent().addClass('input-error');
+		// 		isEmpty = true;
+		// 	}
+		// }
+
+		// if ($(this).is('.style-select')) {
+
+		// 	if ($(this).prev().attr('data-val') == 0) {
+
+		// 		$(this).prev().addClass('input-error');
+		// 		isEmpty = true;
+		// 	}
+		// }
+
+		// if ($(this).attr('type') == 'file') {
+		// 	$(this).next().addClass('input-error');
+		// 	isEmpty = true;
+		// }
+
+		if ($(this).val().length < 3) {
+			isEmpty = true;
+			$(this).addClass('input-error');
 		}
 
-		$('.check-mail').on('keyup', function () {
-				checkMail($(this));
+	});
 
-				if (mailInput.length == 0) {
-						$(this).removeClass('mail-error')
-				}
-		});
-		// check email
+	let mailInput = $(this).parents('.form').find('.check-mail');
 
-		// check require
+	if (!r.test(mailInput.val())) {
+		isEmpty = true;
+		mailInput.addClass('input-error');
+	}
 
-		$('.btn-send').on('click', function (e) {
-		
-				isEmpty = false;
+	timeErrId = setTimeout(function () {
+		$('.input-error').removeClass('input-error');
+	}, 3000);
 
-				checkMail($(this).parents('.form').find('.check-mail'));
+	console.log('isEmpty', isEmpty)
 
-				$(this).parents('.form').find('.require').each(function () {
+	if (isEmpty == true) {
+		e.preventDefault();
+	};
+});
 
-						if ($(this).attr('type') == 'checkbox') {
-								if (!$(this).is(':checked')) {
-										$(this).parent().addClass('input-error');
-										isEmpty = true;
-								}
-						}
-						
-						if ($(this).is('.style-select')) {
-
-								if ($(this).prev().attr('data-val') == 0) {
-
-										$(this).prev().addClass('input-error');
-										isEmpty = true;
-								}
-						}
-
-						if ($(this).attr('type') == 'file') {
-								$(this).next().addClass('input-error');
-								isEmpty = true;
-						}
-
-						if (!$(this).val()) {
-								isEmpty = true;
-								$(this).addClass('input-error');
-						}
-				});
-
-				setTimeout(function () {
-						$('.input-error').removeClass('input-error');
-				}, 3000);
-
-				if (isEmpty == true) {
-						e.preventDefault();
-				};
-		});
-
-		// check require
+// check require
 $('.wpcf7-form-control-wrap').each(function () {
   let sizeVal = $(this).find('.wpcf7-form-control').attr('id');
   $(this).addClass(sizeVal);
 });
 
 
+
+$('.order-pets-btn').on('click', function () {
+
+
+  let parentEl = $(this).parents('.companies-main-info')
+  let mainEmail = parentEl.find('.mail-for-pets')
+  let mainName = parentEl.find('.company-for-pets')
+  $('.pets-name').val(parentEl.find('h2').text());
+  $('.pets-mail ').val(mainEmail.text());
+  $('.pets-compamies').val(mainName.text());
+});
+
+$('.order-sales-btn').on('click', function () {
+
+  let parentEl = $(this).parents('.sales-sidebar');
+  let mainEmail = parentEl.find('.mail-for-sales');
+  let mainName = parentEl.find('.company-for-sales');
+  $('.sales-name').each(function () {
+    $(this).val($('.content h1').text());
+    $(this).text($('.content h1').text());
+  })
+  $('.sales-mail').val(mainEmail.text());
+  $('.sales-compamies').val(mainName.text());
+});
+
+
+$('.order-item-sales-btn').on('click', function () {
+
+  let parentEl = $(this).parents('.sales-item');
+  let mainEmail = parentEl.find('.mail-for-sales');
+  let mainName = parentEl.find('.company-for-sales');
+  console.log(parentEl.find('h2').text());
+
+  $('.sales-name').each(function () {
+    $(this).val(parentEl.find('h2').text());
+    $(this).text(parentEl.find('h2').text());
+  });
+
+  $('.sales-mail').val(mainEmail.text());
+  $('.sales-compamies').val(mainName.text());
+});
+
+// wp forma 7 pets order
+
+
+
 document.addEventListener('wpcf7mailsent', function (event) {
   console.log('mail sent OK');
-  // Stuff
+  console.log(event.detail)
+
+  $('.popup').addClass('send-success');
+
   setTimeout(function () {
-    $('.element-show').removeClass('show');
     $('.wpcf7-form').attr('data-status', 'init');
     $('.wpcf7-form').removeClass('sent invalid');
     $('.wpcf7-form').addClass('init');
-    $('.wpcf7-form').reset();
-  }, 1500);
+
+    $('.element-show').removeClass('show');
+
+  }, 4000);
+
+  setTimeout(function () {
+    $('.popup').removeClass('send-success');
+  }, 4500);
 
 }, false);
 
@@ -479,15 +607,39 @@ $(document).on('click', '.custom-select li', function () {
 
 
 // custom-select
+let boxContainer = $('.search-tag-container');
+let elTag = (text) => (`<div class="search-tag"><span>${text}</span><i></i></div>`);
+
+let mainBox = $('.search-list');
+
+const spinnerNew = $('.preloader-container');
+
+let mainSearch = $('.search');
+
+let searchTimeId;
+
+let inputAjax = $('.search-input-ajax');
+
+let allResults = [];
+
+let dataRace;
+let raceInput = $('.filter-race input');
+dataRace = raceInput.filter(':checked').val();
+raceInput.on('change', function () {
+  dataRace = $(this).val();
+  console.log('test', dataRace)
+});
+
+
+
+console.log('test', dataRace)
+
 const ajaxSearch = (searchVal) => {
-
-
-  console.log("searchVal", searchVal)
 
   $.ajax({
     type: "GET",
-    url: "https://base.panda-dev.ru/wp-json/search/all",
-    data: { 'search': searchVal },
+    url: "/wp-json/animals/all",
+    data: { 'search': searchVal, 'term': dataRace },
     success: generateContent,
     error: handleError
   });
@@ -502,124 +654,186 @@ const handleError = (error) => {
 
 
 const generateContent = (result) => {
+  console.log('test aj', result)
+  allResults = result;
   mainBox.empty();
-  const { news, blog, product, services } = result;
-  appendContent(news, 'news', 'Новости');
-  appendContent(blog, 'blog', 'Блог');
-  appendContent(product, 'product', 'Продукты');
-  appendContent(services, 'services', 'Услуги');
-  mainBox.addClass('active');
-  if (isEmptyRes(result)) {
+  spinnerNew.removeClass('active');
+
+  if (result.length > 0) {
+    const html = `<ul class="ln">${result.map(({ title, link }) => `<li><a class="add-tag" href="${link}">${title}</a></li>`).join('')}</ul>`;
+    mainBox.append(html);
+  } else {
     mainBox.append('<div class="empty-list">Список пуст</div>');
   }
-}
 
-const appendContent = (items, link, title) => {
-  if (items.length > 0) {
-    const html = `
-      <div class="search-list-line">
-        <h3><a href="${link}">${title}</a></h3>
-        <ul class="ln">
-          ${items.map(item => `<li><a href="${item.link}">${item.title}</a></li>`).join('')}
-        </ul>
-      </div>`;
-    mainBox.append(html);
-  }
-}
+  mainBox.addClass('active');
 
-const isEmptyRes = (result) => {
-  return Object.values(result).every(items => items.length === 0);
 }
 
 
 
-let mainBox = $('.search-list');
-const spinner = $('.spinner');
-let mainSearch = $('.search');
 
-
-let searchTimeId;
-
-$('.search-input-ajax').on('keyup', function () {
-
+inputAjax.on('keyup', function () {
+  let search = $(this).closest('.search');
   let searchVal = $(this).val();
 
-  if (searchVal.length > 0) {
+  if (searchVal.length > 1) {
 
-    spinner.addClass('active');
+    spinnerNew.addClass('active');
+    search.addClass('search-on');
 
     clearTimeout(searchTimeId);
     searchTimeId = setTimeout(() => {
 
       ajaxSearch(searchVal);
 
-      spinner.removeClass('active');
     }, 2000);
   } else {
-    console.log("in empty")
+    allResults = [];
+    spinnerNew.removeClass('active');
+    mainBox.empty();
     mainBox.removeClass('active');
+    search.removeClass('search-on');
+  }
+});
+
+
+
+
+$('.search-input').on('blur', function () {
+
+  mainBox.removeClass('active');
+});
+
+$('.search-input').on('focus', function () {
+
+  if (allResults.length > 0) {
+    mainBox.addClass('active');
   }
 });
 
 // Додавить крестик в каждой поиске
-$('.search-input').on('keyup', function () {
-  let $search = $(this).closest('.search');
-  let searchVal = $(this).val();
 
-  if (searchVal.length > 0) {
-    $search.addClass('search-on');
-  } else {
-    $search.removeClass('search-on');
-  };
-});
-
-$('.search-input').on('focus', function () {
-  console.log('focus')
-
-  let $search = $(this).closest('.search');
-  $search.addClass('search-on');
-  mainBox.addClass('active');
-});
-$('.search-input').on('blur', function () {
-  console.log('blur')
-  let $search = $(this).closest('.search');
-  $search.removeClass('search-on');
+function clearCloseField(el) {
+  let search = el.closest('.search');
+  search.removeClass('search-on');
   mainBox.removeClass('active');
-})
-
-// Додавить крестик в каждой поиске
-
-mainSearch.on('click', '.close-btn', function () {
-  let $search = $(this).closest('.search');
-  $search.removeClass('search-on').find('.search-input').val('');
-  mainBox.removeClass('active');
+  inputAjax.val('');
+  allResults = [];
   setTimeout(function () {
     mainBox.empty();
-  }, 2000);
+  }, 250);
+}
+
+mainSearch.on('click', '.close-btn', function () {
+  clearCloseField($(this));
 });
+
+// ЗАБРАТЬ ИЗ СТРОКИ
+function getTagsFromUrl() {
+  const url = new URL(window.location);
+  const specializationParam = url.searchParams.get('specialization');
+
+  if (specializationParam) {
+    // Декодируем и разбиваем значение на массив по разделителю ", "
+    return decodeURIComponent(specializationParam).split(', ');
+  } else {
+    // Если параметр отсутствует, возвращаем пустой массив
+    return [];
+  }
+}
+// ЗАБРАТЬ ИЗ СТРОКИ
+
+
+// РАБОТА СО СТРОКОЙ
+function updateFilterUrl() {
+  let inputSpec = $('.specialization-input');
+  if (arrTags.length === 0) {
+    inputSpec.val('');
+  } else {
+    inputSpec.val(arrTags.join(', '));
+  }
+
+}
+
+// РАБОТА СО СТРОКОЙ
+
+
+// ДОБАВЛЕНИЕ ТЕГОВ
+
+
+
+let arrTags = getTagsFromUrl();
+
+if (arrTags.length > 0) {
+  updateTagContainer(arrTags);
+}
+
+
+
+function updateTagContainer(tags) {
+  boxContainer.empty();
+  const html = tags.map(item => elTag(item)).join('');
+  boxContainer.append(html);
+}
+
+$('body').on('click', '.add-tag', function (e) {
+  e.preventDefault($(this));
+
+  // clearCloseField($(this));
+
+
+  let singleTag = $(this).text();
+  if (!arrTags.includes(singleTag)) {
+    arrTags.push(singleTag);
+  } else {
+    arrTags = arrTags.filter(item => item !== singleTag);
+  }
+  updateTagContainer(arrTags);
+  updateFilterUrl();
+
+  $('.map-filter').submit();
+});
+
+$('body').on('click', '.search-tag', function () {
+  $(this).remove();
+  let singleTag = $(this).find('span').text();
+  arrTags = arrTags.filter(item => item !== singleTag);
+  updateFilterUrl();
+
+  console.log($(this).parents('.map-filter'))
+
+  $('.map-filter').submit();
+});
+// ДОБАВЛЕНИЕ ТЕГОВ
+
+
 
 $('.close-js').on('click', function () {
     $(this).parents('.element-show').removeClass('show');
+    $('.popup').removeClass('send-success');
 });
-$('.popup-overlay-js').on('click',function(e){
+$('.popup-overlay-js').on('click', function (e) {
     $(this).parents('.element-show').removeClass('show');
+    $('.popup').removeClass('send-success');
 });
 
 $(document).on('keyup', (evt) => {
     if (evt.keyCode === 27) {
         $('.element-show').removeClass('show');
+        $('.popup').removeClass('send-success');
     }
 });
 
-$('body').on('click','.element-btn', function (e) {
+$('body').on('click', '.element-btn', function (e) {
     e.preventDefault();
-    
+
     $('.element-show').removeClass('show');
     let activeIndex = $(this).attr('data-element');
-  
+
     $('[data-element="' + activeIndex + '"].element-show').addClass('show');
 
-    
+
 });
 $('.password-field').on('click','i',changeStatePass);
 let visibility = true;
@@ -643,6 +857,7 @@ function changeStatePass(){
 $(window).on('load', function () {
   $('.preloader-popup').addClass('loaded');
 });
+
 
 
 var st = 0;
@@ -727,18 +942,80 @@ $('.sidebar-show-js').on('click', function () {
 $('.close-sidebar').on('click', function () {
   $('.catalog-sidebar').removeClass('active');
 });
+/*sidebar*/
 
 
+/*main page*/
 $('.mouse-down-btn-js').on('click', function () {
   $('html, body').animate({ scrollTop: $('.main-home').height() + 'px' }, 'slow');
 });
-
+/*main page*/
 
 $('.tabs-sticky').on('click', 'li', function () {
   let index = $(this).index() + 1;
-  console.log(index)
+  // console.log(index)
   $('html, body').animate({ scrollTop: $('.tabs-point-' + index).offset().top - 130 + 'px' }, 'slow');
 });
+
+
+$('.scroll-top-js').on('click', function () {
+  $('html, body').animate({ scrollTop: 0 }, 'slow');
+});
+
+
+
+let btnBox = $(`<div><span class="link">Далее...</span></div>`);
+$('.pets-hidden-box-container').each(function () {
+  let heightBox = $(this).height(); // Высота контейнера
+  let contentBox = $(this).html(); // Содержимое контейнера
+
+  if (heightBox > 50) { // Проверяем, если высота больше 100px
+    // Обертываем содержимое в .pets-hidden-box
+    $(this).html('<div class="pets-hidden-box">' + contentBox + '</div>').append(btnBox.clone());
+  }
+});
+
+$('.pets-hidden-box-container').on('click', '.link', function () {
+  let parent = $(this).parents('.pets-hidden-box-container').find('.pets-hidden-box');
+
+  if (parent.hasClass('show')) {
+    parent.removeClass('show');
+    $(this).text('Далее...');
+  } else {
+    parent.addClass('show');
+    $(this).text('Скрыть');
+  }
+
+});
+
+
+
+// PETS INF PITOMNIKI
+$('.pets-tabs-container').each(function () {
+  $(this).find('.pets-tabs-head span').eq(0).addClass('active');
+  $(this).find('.pets-tabs-item').eq(0).addClass('active');
+})
+$('.pets-tabs-head').on('click', 'span', function () {
+  let indexTab = $(this).index();
+
+  let parentsTab = $(this).parents('.pets-tabs-container');
+  let tabSpanItem = parentsTab.find('.pets-tabs-head span');
+  let tabItem = parentsTab.find('.pets-tabs-item');
+
+
+  tabSpanItem.removeClass('active');
+  tabSpanItem.eq(indexTab).addClass('active');
+
+  tabItem.removeClass('active');
+  tabItem.eq(indexTab).addClass('active');
+
+
+});
+
+// PETS INF PITOMNIKI
+
+
+
 let detailTabs = $('.tabs');
 if(detailTabs.length > 0){
   const onHoverMoveCarriage = function(num){
@@ -788,5 +1065,308 @@ commetsStarBlock.on('click', '.stars-ico', function () {
   console.log(numRating, commetsStarBlock.find('.stars-ico').slice(0, numRating))
   $(this).find('input').prop('checked', true);
 }); 
+
+$('.animals-nav').on('click', 'li span', function () {
+  let point = $(this).data('index');
+  console.log('index', point);
+  $('html, body').animate({ scrollTop: $('.' + point).offset().top - 130 + 'px' }, 'slow');
+});
+
+
+const formSearchAnimals = $('.animals-search-js');
+const inputElements = formSearchAnimals.find('input');
+const selectElements = formSearchAnimals.find('.custom-select li');
+
+function handleSubmitForm() {
+  let idTimeSearch;
+  clearTimeout(idTimeSearch);
+  idTimeSearch = setTimeout(() => {
+    $(this).parents('form').submit();
+  }, 500);
+};
+
+inputElements.on('keyup', handleSubmitForm);
+selectElements.on('click', handleSubmitForm);
+// COMMENTS FORM
+let authorInput = $('.comments-author');
+let emailInput = $('.comments-email');
+let avatarInput = $('.comments-avatar');
+
+let startAuthor;
+let startEmail;
+let startAvatar;
+
+// console.log('ud', userData)
+
+if (userData) {
+  $('.comments-form-stub').remove();
+  const { user_email, first_name, last_name, extra_name, foto_profilya } = userData;
+
+  startAuthor = `${first_name} ${last_name} ${extra_name}`;
+
+  startEmail = user_email;
+
+  if (foto_profilya) {
+    if (foto_profilya != '[]') {
+      startAvatar = JSON.parse(foto_profilya);
+      startAvatar = startAvatar[0].url;
+    }
+  }
+
+  authorInput.val(startAuthor);
+  emailInput.val(startEmail);
+  avatarInput.val(startAvatar);
+}
+
+
+$('.comments-anonim-js input').on('click', function () {
+
+  let checkAnonim = $(this);
+  if (checkAnonim.is(':checked')) {
+
+    authorInput.val('Аноним').addClass('input-hide');
+    emailInput.val('anonim@zoonika.ru').addClass('input-hide');
+    avatarInput.val('');
+  } else {
+
+    // console.log('uncheck');
+    authorInput.val(startAuthor).removeClass('input-hide');
+    emailInput.val(startEmail).removeClass('input-hide');
+  }
+});
+
+$('.comments-form-stub').on('click', function () {
+  $('.btn-container-comments').addClass('active');
+});
+
+// COMMENTS FORM
+// console.log('item test')
+let mapItemCompanies = ({
+  specialization_company,
+  images,
+  link,
+  value,
+  address_company,
+  sales_count
+
+}) => {
+
+
+  return `
+    <div class="map-item">
+      <h3><a href="${link}">${value}</a></h3>
+      <div class="map-item-slider">
+        ${images.map(img => `<div class="map-item-img"><div class="img-cover"><img src="${img.url}" alt="pic" /></div></div>`).join('')}
+      </div>
+      <ul class="map-item-info ln">
+        <li>Специализация: <b>${specialization_company.map(el => `<span>${el.name}</span>`).join(', ')}</b></li>
+        <li>Адрес: <b>${address_company.address}</b></li>
+        <li>Количество объявлений: <b>${sales_count}</b></li>
+      </ul> 
+      <div class="btn-container">
+        <a class="btn btn--blue" href="${link}">Подробнее</a>
+      </div>
+    </div >
+  `
+};
+// console.log('item test')
+let mapItemSales = ({
+  price,
+  images,
+  link,
+  value,
+  birth,
+  gender,
+  race,
+  target
+
+}) => {
+  console.log(target)
+
+  return `
+    <div class="map-item">
+      <h3><a href="${link}">${value}</a></h3>
+      <div class="map-item-box">
+      ${target && `<div class="sales-item-type ${target.value}">${target.label}</div>`}
+      <div class="map-item-slider">
+        ${images.map(img => `<div class="map-item-img"><div class="img-cover"><img src="${img.url}" alt="pic" /></div></div>`).join('')}
+      </div>
+      </div>
+      
+      <ul class="map-item-info ln">
+        ${price ? (`<li class="sales-price">Цена: <b>${price === 'empty' ? 'Договорная' : price}</b></li>`) : ''}
+        ${birth ? (`<li>Дата рождения: <b>${birth}</b></li>`) : ''}
+        ${gender ? (`<li>Пол: <b>${gender.label}</b></li>`) : ''}
+        ${race ? (`<li>Порода: <b>${race.race.name}</b></li>`) : ''}
+      </ul>
+      <div class="btn-container">
+        <a class="btn btn--blue" href="${link}">Подробнее</a>
+      </div>
+    </div>
+  `
+};
+
+if ($('#map').length) {
+  ymaps.ready(function () {
+
+    let arrCoords = [];
+    let arrAddresses = $('.contacts-address-line');
+
+    let slug = $('#map').data('slug');
+
+    let myMap = new ymaps.Map('map', {
+      center: [55.755864, 37.617698],
+      zoom: 12
+    }, {
+      searchControlProvider: 'yandex#search'
+    });
+
+    myMap.controls.remove('trafficControl'); // Пробки
+    myMap.controls.remove('typeSelector'); // Тип карты
+    myMap.controls.remove('fullscreenControl'); // Полноэкранный режим
+    myMap.controls.remove('rulerControl'); // Линейка
+    myMap.controls.remove('geolocationControl'); // Геолокация
+    myMap.controls.remove('searchControl'); // Поиск
+
+    // Убираем слои
+    // myMap.layers.remove('traffic#actual'); // Слой пробок
+    // myMap.layers.remove('routeEditor'); // Редактор маршрутов
+
+    let objectManager = new ymaps.ObjectManager({
+      clusterize: true,
+      gridSize: 32,
+      clusterDisableClickZoom: true,
+      openBalloonOnClick: false
+
+    });
+
+    objectManager.objects.options.set('preset', 'islands#greenDotIcon');
+    objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
+    myMap.geoObjects.add(objectManager);
+
+    arrAddresses.each(function (index) {
+      // arrCoords.push($(this).data('coords'));
+      arrCoords.push({
+        "type": "Feature", "id": index, "geometry": { "type": "Point", "coordinates": $(this).data('coords') },
+        "properties": {
+          "id_post": $(this).data('id')
+        }
+      });
+
+    });
+
+    objectManager.add({
+      "type": "FeatureCollection",
+      "features": arrCoords
+    });
+
+
+    let mapInfo = $('.map-info');
+    let mapInfoContainer = mapInfo.find('.map-info-container');
+    //
+
+
+
+
+    function updateVisiblePoints(arrVisibleMarker) {
+      mapInfoContainer.empty();
+
+      mapInfo.addClass('active loading');
+
+
+
+      $.ajax({
+        type: "POST",
+        url: "/wp-json/get/posts",
+        data: {
+          'slug': slug,
+          'map': 'true',
+          'arrVisibleMarker': arrVisibleMarker
+        },
+        success: function (result) {
+          mapInfo.removeClass('loading');
+
+          result.forEach((item) => {
+            console.log('item', item)
+            item.slug === 'companies' && mapInfoContainer.append(mapItemCompanies(item));
+            item.slug === 'sales' && mapInfoContainer.append(mapItemSales(item));
+
+          });
+
+
+          let mapItemSlider = $('.map-item-slider');
+          mapItemSlider.lightSlider({
+            item: 1,
+            loop: true,
+            slideMove: 1,
+            pager: false,
+            addClass: 'map-item-slider-container'
+          });
+
+          $('.img-cover').each(function () {
+            let imgSrc = $(this).find('img').attr('src');
+            //console.log(imgSrc);
+            $(this).css('background-image', 'url(' + imgSrc + ')');
+          });
+        }
+      });
+    }
+
+    // ПОЛУЧАЕМ И ВЫВОДИМ ПРИ КЛИКЕ
+    objectManager.objects.events.add('click', function (e) {
+      let objectId = e.get('objectId');
+      let objectData = objectManager.objects.getById(objectId);
+      let idPost = objectData.properties.id_post;
+
+      console.log(idPost)
+      updateVisiblePoints([idPost]);
+    });
+
+    objectManager.clusters.events.add('click', function (e) {
+      let clusterId = e.get('objectId');
+      let cluster = objectManager.clusters.getById(clusterId);
+      let arrVisibleMarker = cluster.features.map(item => item.properties.id_post);
+
+      console.log('arrVisibleMarker', arrVisibleMarker)
+      updateVisiblePoints(arrVisibleMarker);
+    });
+
+    $('.close-btn--map-popup').on('click', function () {
+      mapInfoContainer.empty();
+
+      mapInfo.removeClass('active loading');
+    });
+
+
+    myMap.setBounds(myMap.geoObjects.getBounds(), {
+      checkZoomRange: true
+    }).then(function () {
+      if (myMap.getZoom() > 12) myMap.setZoom(12);
+    });
+  });
+
+
+}
+
+// checkbox.radio Кнопки
+let choiseBtn = $('.choise-input-btn');
+
+choiseBtn.on('click', function () {
+  let btnValue = $(this).data('value');
+  let choiseParent = $(this).parent();
+  let choiseInput = choiseParent.find('.choise-input-field');
+
+  if ($(this).hasClass('active')) {
+    choiseInput.val('');
+    $(this).removeClass('active');
+  } else {
+    choiseInput.val(btnValue);
+    choiseParent.find('.choise-input-btn').removeClass('active');
+    $(this).addClass('active');
+  }
+  console.log(btnValue)
+});
+// checkbox.radio Кнопки
+
 });
 //# sourceMappingURL=common-dist.js.map
